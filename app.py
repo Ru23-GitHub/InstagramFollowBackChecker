@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, url_for
 import json
 
 
@@ -18,17 +18,22 @@ def index():
 
 @app.route("/form", methods = ["POST"])
 def form():
-    followers_file = request.files["followers_file"]
-    followers_data = json.load(followers_file)
-    followers_set = set()
-    for follower in followers_data["relationships_followers"]:
-        followers_set.add((follower["string_list_data"][0]['value'],follower["string_list_data"][0]['href']))
 
-    following_file = request.files["following_file"]
-    following_data = json.load(following_file)
-    following_set = set()
-    for follower in following_data["relationships_following"]:
-        following_set.add((follower["string_list_data"][0]['value'],follower["string_list_data"][0]['href']))
+    try:
+        followers_file = request.files["followers_file"]
+        followers_data = json.load(followers_file)
+        followers_set = set()
+        for follower in followers_data["relationships_followers"]:
+            followers_set.add((follower["string_list_data"][0]['value'],follower["string_list_data"][0]['href']))
 
-    title = "IFBC - Results"
-    return render_template("form.html", title=title, names = get_follow_difference(followers_set,following_set))
+        following_file = request.files["following_file"]
+        following_data = json.load(following_file)
+        following_set = set()
+        for follower in following_data["relationships_following"]:
+            following_set.add((follower["string_list_data"][0]['value'],follower["string_list_data"][0]['href']))
+
+        title = "IFBC - Results"
+        return render_template("form.html", title=title, names = get_follow_difference(followers_set,following_set))
+    except:
+        title = "IFBC - Error"
+        return render_template("error.html", title=title)
