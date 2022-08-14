@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <div class="container">
+        <h1>Input Files</h1>
+        <br/><br/>
+
+        <form action="/form" method="POST" enctype="multipart/form-data">
+            <h6>Select Follower JSON FIle</h6>
+            <div class="mb-3">
+                <input type="file" class="custom-file-input" id="follower_file" name="follower_file">
+            </div>
+            <br/>
+            <h6>Select Following JSON FIle</h6>
+            <div class="mb-3">
+                <input type="file" class="custom-file-input" id="following_file" name="following_file">
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+
+
+
+    </div>
+
+{% endblock %}
+  
