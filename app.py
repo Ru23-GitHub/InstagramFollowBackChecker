@@ -23,8 +23,10 @@ def form():
         followers_file = request.files["followers_file"]
         followers_data = json.load(followers_file)
         followers_set = set()
-        for follower in followers_data["relationships_followers"]:
+        for follower in followers_data:
             followers_set.add((follower["string_list_data"][0]['value'],follower["string_list_data"][0]['href']))
+
+        print("GOT HERE 1")
 
         following_file = request.files["following_file"]
         following_data = json.load(following_file)
@@ -32,7 +34,11 @@ def form():
         for follower in following_data["relationships_following"]:
             following_set.add((follower["string_list_data"][0]['value'],follower["string_list_data"][0]['href']))
 
+        print("GOT HERE 2")
+
         title = "IFBC - Results"
+
+        print("GOT HERE 3")
         return render_template("form.html", title=title, names = get_follow_difference(followers_set,following_set))
     except:
         title = "IFBC - Error"
